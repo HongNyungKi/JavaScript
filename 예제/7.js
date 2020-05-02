@@ -64,3 +64,20 @@ console.log(anotherAnimals);
 const numbers = [1, 2, 3, 4, 5];
 const spreadNumbers = [...numbers, 1000, ...numbers];
 console.log(spreadNumbers);
+
+//4. 함수의 인자에서 spread 연산자 이용하기
+function subtract(x, y) {
+    return x - y;
+}
+const numbers = [1, 2];
+const result = subtract(numbers[0], numbers[1]);
+console.log(result); //-1
+//이런 경우!!!
+function subtract(x, y) {
+    return x - y;
+}
+const numbers = [1, 2];
+const result = subtract(...numbers);
+console.log(result); //-1
+
+// 5. 추가 예시
