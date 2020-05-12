@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>Document</title>
+    <script>
+        $(function () {
+            $("button").on("click", function () {
+                $("li:has(span)").text("span 요소를 갖고있는 아이템입니다.")
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <h1>선택한 요소의 필터링</h1>
+    <ul>
+        <li>1</li>
+        <li>2 <span></span> </li>
+        <li>3</li>
+    </ul>
+    <button>필터링</button>
+</body>
+
+</html>
