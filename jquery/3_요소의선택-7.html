@@ -9,19 +9,24 @@
     <script>
         $(function () {
             $("button").on("click", function () {
-                var imgSrc = $("img").attr("src");
-
-                $("img").attr("src", "../images/2.jpg")
+                $("li").parents().css({
+                    "border": "1px solid red",
+                    "margin": "10px"
+                })
             });
         });
     </script>
 </head>
 
 <body>
-    <h1>.attr()메소드</h1>
-    <p>아래의 버튼을 누르면 다음 이미지를 변경할 수 있다.</p>
-    <button>src속성 변경!</button>
-    <img src="../images/1.jpg" width="500px" height="300px">
+    <div>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </div>
+    <button>부모 요소 탐색하기</button>
 </body>
 
 </html>
