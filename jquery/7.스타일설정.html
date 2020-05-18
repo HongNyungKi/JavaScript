@@ -1,0 +1,127 @@
+css설정
+.css() 메소드
+<script>
+    $(function () {
+        $(".size").on("click", function () {
+            $("p").css("font-size", "20px");
+        });
+        $(".manyCss").on("click", function () {
+            $(".container").css({
+                border: "1px solid red",
+                backgroundColor: "tomato",
+                padding: "10px"
+            })
+        })
+    })
+</script>
+
+<body>
+        <h1>.css()메소드</h1>
+        <div class="container">
+                <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus autem iusto, ad dolorum eligendi reiciendis
+                        nisi
+                        eum facilis et quod dolor distinctio maiores, voluptas, quisquam reprehenderit perferendis ducimus officiis
+                        expedita?
+                    </p>
+            </div>
+        <button class="size">폰트 사이즈 변환하기</button>
+        <button class="manyCss">여러 css 한번에 입히기</button>
+        <p id="text"></p>
+</body>
+
+.attr() 메소드 와 .removeAttr() 메소드
+<script>
+    $(function () {
+        $(".add").on("click", function () {
+            $("img").attr("src",
+                "https://movie-phinf.pstatic.net/20200212_161/1581489520959v0cjn_JPEG/movie_image.jpg"
+            );
+        });
+        $(".remove").on("click", function () {
+            $("img").removeAttr("src");
+        })
+    });
+</script>
+
+<body>
+        <div>
+                <img src="https://movie-phinf.pstatic.net/20200131_124/15804372063603wOKW_JPEG/movie_image.jpg">
+                </div>     <button class="add">.attr()추가</button>
+            <button class="remove">.attr()제거</button>
+</body>
+
+.prop()메소드와 .removeProp()메소드
+
+js에서는 css속성명 사용시, 반드시 camelCase방식을사용하지만
+jQuery에서는 둘다 사용이 가능하다
+
+클래스 설정
+.addClass() 메소드와 .removeClass() 메소드
+<script>
+    $(function () {
+        $(".add").on("click", function () {
+            $("li:even").addClass("hnk");
+        });
+        $(".remove").on("click", function () {
+            $("li:even").removeClass("hnk");
+        })
+    });
+</script>
+    <style>
+    .hnk {
+        color: blue;
+    }
+</style>
+
+<body>
+        <ul>
+                <li>홍녕기</li>
+                <li>어벤져스</li>
+                <li>헐크</li>
+            </ul>
+        <button class="add">class추가</button>
+        <button class="remove">class제거</button>
+</body>
+
+.toggle() 메소드
+: 상위의 기능을 간단히 할 수 있다.
+<script>
+    $(function () {
+        $("button").on("click", function () {
+            $("li:even").toggleClass("hnk")
+        });
+    });
+</script>
+    <style>
+    .hnk {
+        color: blue;
+    }
+</style>
+
+<body>
+        <ul>
+                <li>홍녕기</li>
+                <li>어벤져스</li>
+                <li>헐크</li>
+            </ul>
+        <button>이게 바로 toggle이다~!</button>
+</body>
+
+.hasClass() 메소드
+: 해당 요소가 특정 클래스에 포함되어 있는지를 확인할 수 있다.
+
+<script>
+    $(function () {
+        $("button").on("click", function () {
+            var result = $("p").hasClass("hnk");
+            $("span").html(result);
+        });
+    });
+</script>
+
+<body>
+        <p class="hnk">이 문장에 hnk라는 class가 있는지 없는지 확인할 수 있다.</p>
+        <button>있으면 true</button>
+        <span></span>
+</body>

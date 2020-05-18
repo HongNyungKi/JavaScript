@@ -1,0 +1,214 @@
+대표적인! .width()와 .height() 메소드
+: 선택한 요소 집팝의 첫 번째 요소의 너비 or 높이를 반환하거나,
+선택된 요소의 너비 or 높이를 전달된 값으로 설정한다.
+
+임의의 div요소의 크기 구하기
+<style>
+    #divBox {
+        width: 300px;
+        height: 200px;
+        border: 1px solid red;
+    }
+</style>
+<script>
+    $(function () {
+        $("button").on("click", function () {
+            var size = "이 div요소의 ";
+            size += "너비는 " + $("#divBox").width() + "px이고,<br>";
+            size += "높이는 " + $("#divBox").height() + "px이다.";
+            $("#text").html(size);
+        })
+    })
+</script>
+
+<body>
+        <div id="divBox">
+                <p id="text"></p>
+            </div>
+        <button>요소의 크기 정보</button>
+</body>
+
+상단의 원리를 활용하여 뷰포트와 html문서의 크기도 알아낼수 있다.
+<script>
+    $(function () {
+        $("button").on("click", function () {
+            var size = "";
+            size += "브라우저 뷰포트의 크기는 " + $(window).width() + "X" + $(window).height() + "입니다.<br>";
+            size += "HTML 문서의 크기는 " + $(document).width() + "X" + $(document).height() + "입니다."
+            $("#text").html(size);
+        })
+    })
+</script>
+
+<body>
+        <button>브라우저 및 문서의 크기 정보</button>
+        <p>(* 브라우저의 크기를 조절해 가며 버튼 눌러보기!)</p>
+        <p id="text"></p>
+</body>
+
+선택된 요소의 크기를 인수로 전달받은 값으로 설정하기
+<script>
+    $(function () {
+        $("button").on("click", function () {
+            $("#divBox").width("400");
+            $("#divBox").height("300");
+        })
+    })
+</script>
+    <style>
+    #divBox {
+        width: 200px;
+        height: 300px;
+        border: 1px solid red;
+    }
+</style>
+
+<body>
+        <div id="divBox"></div>
+        <button>요소 크기 변환하기</button>
+</body>
+
+요소의 크기에 관한 메소드
+요소의 크기에 관한 메소드 모두를 활용한 예제
+<script>
+    $(function () {
+        $("button").on("click", function () {
+            var size = "이 div 요소의 ";
+            size += "크기는 " + $("#divBox").width() + "X" + $("#divBox").height() + "이고,<br>";
+            size += "패딩 영역을 포함한 크기는 " + $("#divBox").innerWidth() + "X" + $("#divBox")
+                .innerHeight() + "이고,<br>";
+            size += "마진 영역까지 포함한 크기는 " + $("#divBox").outerWidth(true) + "X" + $("#divBox")
+                .outerHeight(true) + "입니다. "
+            $("#text").html(size);
+        });
+    })
+</script>
+    <style>
+    #divBox {
+        width: 400px;
+        height: 300px;
+        border: 3px solid blue;
+        padding: 20px;
+    }
+</style>
+
+<body>
+        <div id="divBox">
+                <p id="text"></p>
+            </div>
+        <button>다양한 요소 크기 나타내기</button>
+</body>
+
+요소의 위치
+.offset() 메소드
+: 선택한 요소 집합의 첫 번째 요소의 위치를 html문서를 기준으로 반환한다.
+
+.offset() 메소드를 활용하여, 요소의 위치정보 알아내기
+<script>
+    $(function () {
+        $("button").on("click", function () {
+            var position = $("#para").offset();
+            var info = "p요소의 위치는 <br>";
+            info += "left가 " + position.left + "px이고, ";
+            info += "top이 " + position.top + "px이다.";
+            $("#text").html(info);
+        });
+    })
+</script>
+    <style>
+    #divBox {
+        width: 200px;
+        height: 100px;
+        border: 1px solid blue;
+    }
+
+    #para {
+        font-size: bold;
+        margin-top: 25px;
+        margin-left: 10px;
+    }
+</style>
+
+<body>
+        <div id="divBox">
+                <p id="para">p요소</p>
+            </div>
+        <button>요소의 위치 정보</button>
+        <p id="text"></p>
+</body>
+
+
+.offset() 메소드가 호출될 때 인수를 전달받으면, 선택한 요소의 위치를 인수로 전달받은 값으로 설정한다.
+<script>
+    $(function () {
+        $("button").on("click", function () {
+            $("#para").offset({
+                top: 400,
+                left: 100
+            })
+            var position = $("#para").offset();
+            var info = "p요소의 위치는 <br>";
+            info += "left가 " + position.left + "px이고, ";
+            info += "top이 " + position.top + "px이다.";
+            $("#text").html(info);
+        });
+    })
+</script>
+    <style>
+    #divBox {
+        width: 200px;
+        height: 100px;
+        border: 1px solid blue;
+    }
+</style>
+
+<body>
+        <div id="divBox">
+                <p id="para">p요소</p>
+            </div>
+        <button>요소의 위치 정보</button>
+        <p id="text"></p>
+</body>
+
+.position()메소드
+: .offset()메소드와는 달리, 선택한 요소가 웹페이지에 위치할 때 기준이 되었던 부모 요소를 기준으로 하는 상대 위치를 반환한다.
+.offset() 메소드와 함께하여 문서기준, 부모 기준의 차이를 나타내보자
+<script>
+    $(function () {
+        $("button").on("click", function () {
+            var result = "";
+            var offPosition = $("#para").offset();
+            var posPosition = $("#para").position();
+            result += ".offset()메소드를 사용하여 위치를 구하면 <br>";
+            result += "left가 " + offPosition.left + "px 이고, ";
+            result += "top은 " + offPosition.top + "px 이다. <br>";
+            result += ".position()메소드를 사용하여 위치를 구하면 <br>";
+            result += "left가 " + posPosition.left + "px 이고, ";
+            result += "top이 " + posPosition.top + "px 이다.";
+            $("#text").html(result);
+        });
+    })
+</script>
+<style>
+    #divBox {
+        width: 200px;
+        height: 100px;
+        border: 1px solid blue;
+    }
+
+    #para {
+        margin-top: 50px;
+        margin-left: 10px;
+    }
+</style>
+
+<body>
+        <div id="divBox">
+                <p id="para">p요소</p>
+            </div>
+        <button>요소의 위치 정보</button>
+        <p id="text"></p>
+</body>
+
+.scrollLeft()메소드 와 .scrollTop() 메소드
+: 선택한 요소 집합의 첫번째 요소의 수평 스크롤 바의 현재 위치를 얻거나, 해당 요소의 수평 스크롤 바의 위치를 인수로 전달받은 값으로 설정한다.
