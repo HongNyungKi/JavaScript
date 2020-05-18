@@ -1,0 +1,220 @@
+이벤트의 개념
+
+이벤트란?(event)
+: 마우스를 움직이거나, 요소를 클릭하거나, 텍스트 박스에 글을 쓰는 등 사용자의 수많은 종류의 동작들이 이벤트를
+발생시킨다.
+즉, 이벤트가 발생했다는 것은 웹페이지에서 특정 동작이 발행하여, 웹브라우저가 그 사실을 알려주는 것 이다.
+
+이벤트 핸들러란?(event handler)
+: 특정 요소에서 발생하는 이벤트를 처리하기 위해, 이벤트 핸들러라는 함수를 작성하여 연결한다.
+연결된 특정 요소에서 지정된 타입의 이벤트가 발생하면, 웹브라우저는 연결된 이벤트 핸들러를 실행한다.
+
+이벤트 객체(event object)
+: 이벤트 핸들러 함수는 이벤트 객체를 인수로 전달받을 수 있다.
+전달받은 이벤트 객체를 이용하여 이벤트의 성질을 결정하거나, 이벤트의 기본 동작을 막을수도 있다.
+
+이벤트의 연결(event blinding)
+: 특정 요소에 발생하는 이벤트를 처리하기 위해, 이벤트 핸들러라는 함수를 작성해야만 연결이 된다.
+이를 이벤트 연결이라 한다.
+id값이 btn인 요소에 클릭(click)이벤트 핸들러를 연결하는 다양한 방법
+1. $("#btn").click(function(event) { // 실행하고자 하는 제이쿼리 코드 });
+2. $("#btn").bind("click", function(event) { // 실행하고자 하는 제이쿼리 코드 });
+3. $("#btn").on("click", function(event) { // 실행하고자 하는 제이쿼리 코드 });
+4. $("body").on({click: function(event) { // 실행하고자 하는 제이쿼리 코드 }}, "#btn");
+5. $("body").on("click", "#btn", function(event) { // 실행하고자 하는 제이쿼리 코드 });
+
+.on() 메소드
+: jQuery는 이벤트 연결을 위해 .on() 메소드를 사용한다.
+- 선택한 요소에 어떤 타입의 이벤트라도 연결할 수 있다.
+- 하나의 이벤트 핸들러에 여러개의 이벤트를 동시에 연결할 수 있다.
+- 선택한 요소에 여러개의 이벤트 핸들러와 여러개의 이벤트를 같이 연결할 수 있다.
+- 사용자 지정 이벤트(custom event)를 위해 이벤트 핸들러로 데이터를 넘길 수 있다.
+
+하나의 이벤트 핸들러에 여러개의 이벤트를 동시에 연결하기
+<script>
+    $(function () {
+        $("button").on("mouseenter mouseleave", function () {
+            $("#text").append("마우르 들어가고 나올때 마다 생김! <br>")
+        });
+    });
+</script>
+
+<body>
+        <button>마우스를 대보시오</button>
+        <p id="text"></p>
+</body>
+
+하나의 요소에 여러개의 이벤트 핸들러를 연결하여 여러개의 이벤트를 같이 연결하기
+<script>
+    $(function () {
+        $("button").on({
+            mouseenter: function () {
+                $("#text").append("마우스가 버튼위로 진입했다.<br>");
+            },
+            click: function () {
+                $("#text").append("마우스를 틀릭했다.<br>");
+            },
+            mouseleave: function () {
+                $("#text").append("마우스가 버튼에서 빠져나갔다.<br>");
+            }
+        });
+    });
+</script>
+
+<body>
+        <button>마우스를 대보시오</button>
+        <p id="text"></p>
+</body>
+
+.one() 메소드
+: 연결된 이벤트 핸들러가 한번 실행되고 나서는, 더는 실행되지 않는다.
+또한, 같은 이벤트에 대해 연결된 이벤트 핸들러가 한번 실행된 후에는 다른 이벤트 핸들러를 실행하고 싶을때 사용한다.
+<script>
+    $(function () {
+        $("button").one("click", function () {
+            $("#text").append("첫번째 클릭입니다.");
+        });
+    });
+</script>
+
+.off()메소드
+: 더는 사용하지 않는 이벤트와의 연결을 제거한다.
+<script>
+    $(function () {
+        $("#event").on("click", function () {
+            $("#text").append("클릭입니다.");
+        });
+        $("#removeEvent").on("click", function () {
+            $("#event").off("click");
+        })
+    });
+</script>
+
+<body>
+        <button id="event">이벤트</button>
+        <button id="removeEvent">이벤트 제거</button>
+        <p id="text"></p>
+</body>
+
+
+이벤트의 위임(event delegation)
+: 위임을 통해 다수의 요소에 공통으로 적용되는 이벤트 핸들러를 공통된 조상요소에 단한번만 연결하여 동작할수 있다.
+
+ul요소의 자식 요소 중 a요소에 대해 요소마다 각각 이벤트 핸들러를 직접 연결하기
+(단, 새롭게 추가된 요소에는 적용되지 않는다.)
+<script>
+    $(function () {
+        $("ul a").on("click", function (event) {
+            event.preventDefault();
+            $("#text").append("이 링크는 작동하지 않습니다.<br>");
+        })
+        $("button").on("click", function () {
+            $("ul").append("<li><a href='#'>a링크</a></li>");
+        })
+    });
+</script>
+
+<body>
+        <ul>
+                <li><a href="#">a링크</a></li>
+                <li><a href="#">a링크</a></li>
+            </ul>
+        <button>요소 추가하기</button>
+        <p id="text"></p>
+</body>
+
+이벤트의 위임을 이용하기
+<script>
+    $(function () {
+        $("ul").on("click", "a", function (event) {
+            event.preventDefault();
+            $("#text").append("이 링크는 작동하지 않습니다.<br>");
+        })
+        $("button").on("click", function () {
+            $("ul").append("<li><a href='#'>a링크</a></li>");
+        })
+    });
+</script>
+
+이벤트의 전파(event propagation)
+:
+
+.on() 이외의 이벤트 메소드
+: 마우스 / 키보드 / 입력양식(form)
+
+마우스 이벤트와 관련된 메소드
+.click() 메소드
+.dblclick() 메소드
+<script>
+    $(function () {
+        $("button").click(function () {
+            $("#clickText").css("color", "red");
+            $("#dblclickText").css("color", "black");
+        });
+        $("button").dblclick(function () {
+            $("#dblclickText").css("color", "red");
+            $("#clickText").css("color", "black");
+        })
+    });
+</script>
+
+<body>
+        <p>버튼을 <span id="clickText">클릭</span>하거나,
+         <span id="dblclickText">더블클릭</span>해보쉴?</p>
+        <button>여기를!</button>
+</body>
+.hover() 메소드
+: js의 mouseenter와 mouseleave 이벤트를 같이 이벤트 핸들러와 연결하는것이다.
+<script>
+    $(function () {
+        $("button").hover(function () {
+            $("#text").append("마우스가 버튼위로 진입하거나 빠져나갔다. <br>")
+        })
+    });
+</script>
+
+<body>
+        <button>여기여기!</button>
+        <p id="text"></p>
+</body>
+.mousedown()
+.mouseenter()
+.mouseleave()
+.mousemove()
+.mouseout()
+.mouseover()
+.mouseup()
+
+
+키보드 이벤트와 관련된 메소드
+.keypress() 메소드
+문자를 입력할 때마다 입력한 문자에 해당하는 유니코드 숫자를 출력하는 것이다.
+.keyup() 메소드
+.keypress() 메소드
+
+
+입력 양식 이벤트와 관련된 메소드
+.focusin() 메소드와 .focusout() 메소드
+<script>
+    $(function () {
+        $("#focus").focusin(function () {
+            $(this).css("backgroundColor", "gray");
+        });
+        $("#focus").focusout(function () {
+            $(this).css("backgroundColor", "white");
+        })
+    });
+</script>
+
+<body>
+        <p>텍스트 필드레 포커스 해보슈</p>
+        <input type="text" id="focus">
+</body>
+
+.blur()
+.change()
+.select()
+.submit()
+.focus()
+.focusin()
+.focusout()
