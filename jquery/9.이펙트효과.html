@@ -1,0 +1,226 @@
+요소의 표시와 숨김
+
+.hide() 메소드와 .show() 메소드
+: .hide()를 통해 숨겨진 요소는 css display속성값이 none으로 설정된다 .show()를 통해 다시 나타난다.
+인수로 밀리초에 해당하는 숫자나 slow , fast 등의 예약어를 전달하여 이펙트 효과를 조절할 수 있다.
+<script>
+    $(function () {
+        $("#hideBtn").on("click", function () {
+            $("p").hide(2000);
+        });
+        $("#showBtn").on("click", function () {
+            $("p").show("fast");
+        });
+    });
+</script>
+
+<body>
+        <p>
+                이 단락을 표시하거나 숨길거임.
+            </p>
+        <button id="showBtn">요소 표시하기</button>
+        <button id="hideBtn">요소 숨기기</button>
+</body>
+
+.toggle() 메소드
+<script>
+    $(function () {
+        $("#togBtn").on("click", function () {
+            $("p").toggle("slow");
+        });
+    });
+</script>
+
+페이드 효과
+: .hide() 메소드와 .show() 메소드와 비슷하지만 보면 다르다
+.fadeIn() 메소드와 .fadeOut()메소드
+<script>
+    $(function () {
+        $("#fadeInBtn").on("click", function () {
+            $("#box").fadeIn("slow");
+        });
+        $("#fadeOutBtn").on("click", function () {
+            $("#box").fadeOut("fast");
+        })
+    });
+</script>
+    <style>
+    #box {
+        width: 100px;
+        height: 100px;
+        background: yellow;
+        border: 3px solid red;
+    }
+</style>
+
+<body>
+        <div id="box"></div>
+        <button id="fadeInBtn">fade in</button>
+        <button id="fadeOutBtn">fade out</button>
+</body>
+
+.fadeToggle() 메소드
+<script>
+    $(function () {
+        $("#fadeTogBtn").on("click", function () {
+            $("#box").fadeToggle(1500);
+        })
+    });
+</script>
+
+<body>
+        <div id="box"></div>
+        <button id="fadeTogBtn">fade in or out</button>
+</body>
+
+.fadeTo() 메소드
+: 페이드 효과에서 사용하는 최종 opacity 속성값을 직접 설정할 수 있다.
+<script>
+    $(function () {
+        $("#fadeToBtn").on("click", function () {
+            $(".box1").fadeTo(1200, 0.2);
+            $(".box2").fadeTo(1200, 0.4);
+            $(".box3").fadeTo(1200, 0.8);
+        })
+    });
+</script>
+    <style>
+    .box {
+        width: 100px;
+        height: 100px;
+        background: yellow;
+        border: 3px solid red;
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+        <div class="box1 box"></div>
+        <div class="box2 box"></div>
+        <div class="box3 box"></div>
+        <button id="fadeToBtn">fade opacity</button>
+</body>
+
+
+슬라이드 효과
+.slideUp() 메소드
+.slideDown() 메소드
+.slideToggle() 메소드
+
+
+이펙트 효과의 제어
+.delay() 메소드
+<script>
+    $(function () {
+        $("#delayBtn").on("click", function () {
+            $(".box").fadeOut("slow").delay(1000).fadeIn("slow");
+        })
+    });
+</script>
+.stop()메소드와 .finish()메소드
+<script>
+    $(function () {
+        $("#togBtn").on("click", function () {
+            $(".box").slideToggle(2000);
+        })
+        $("#stopBtn").on("click", function () {
+            $(".box").stop();
+        })
+        $("#finishBtn").on("click", function () {
+            $(".box").finish();
+        })
+    });
+</script>
+    <style>
+    .box {
+        width: 100px;
+        height: 100px;
+        background: yellow;
+        border: 3px solid red;
+    }
+</style>
+
+<body>
+        <button id="togBtn">토글</button>
+        <button id="stopBtn">중지</button>
+        <button id="finishBtn">종료</button>
+        <div class="box"></div>
+</body>
+
+사용자 정의 이펙트
+.animate() 메소드
+:$(선택자).animate(프로퍼티[지속시간],[시간당속도함수],[콜백함수])
+<style>
+    #divBox {
+        width: 100px;
+        height: 100px;
+        border: 3px solid red;
+        background-color: yellow;
+        margin: 15px;
+        position: absolute;
+    }
+</style>
+    <script>
+    $(function () {
+        $("#animateBtn").on("click", function () {
+            $("#divBox").animate( // id가 "divBox"인 요소를
+                {
+                    left: "+=100", // 오른쪽으로 100픽셀 이동하고,
+                    opacity: 0.2 // 투명도를 0.2로 변경함.
+                }, 500,
+                function () { // 0.5초에 걸쳐서 이펙트 효과가 진행됨.
+                    $("#text").html("사용자 정의 이펙트가 실행됐어요!");
+                }
+            );
+        });
+    });
+</script>
+
+<body>
+        <button id="animateBtn">요기를 눌러봐!</button>
+        <p id="text">이펙트 효과가 모두 끝나면 이 텍스트는 변경된다!!</p>
+        <div id="divBox"></div>
+</body>
+
+.animate() 메소드에서 사용할수 있는 css속성들
+- backgroundPositionX
+- backgroundPositionY
+- borderWidth
+- borderBottomWidth
+- borderLeftWidth
+- borderRightWidth
+- borderTopWidth
+- borderSpacing
+- margin
+- marginBottom
+- marginLeft
+- marginRight
+- marginTop
+- outlineWidth
+- padding
+- paddingBottom
+- paddingLeft
+- paddingRight
+- paddingTop
+- height
+- width
+- maxHeight
+- maxWidth
+- minHeight
+- minWidth
+- fontSize
+- bottom
+- left
+- right
+- top
+- letterSpacing
+- wordSpacing
+- lineHeight
+- textIndent
+
+.animate() 메소드의 미리 정의된값
+.show
+.hide
+.toggle
+
+.animate() 메소드의 시간당 속도 함수
