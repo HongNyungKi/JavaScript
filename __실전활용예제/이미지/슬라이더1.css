@@ -1,0 +1,42 @@
+body {
+    margin: 100px;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.slide_board {
+    width: 55%;
+    position: relative;
+}
+
+.animation_canvas {
+    position: relative;
+}
+
+.slider_panel {}
+
+.slider_panel img {
+    width: 100%;
+    position: absolute;
+}
+
+.slider_text_panel {
+    /* display: none; */
+}
+
+.control_panel {
+    display: flex;
+    justify-content: center;
+}
+
+.control_panel span {
+    width: 10px;
+    height: 10px;
+    background: gray;
+    border-radius: 5px;
+    margin: 0 3px;
+    opacity: 0.5;
+}
