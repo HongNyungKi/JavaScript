@@ -1,96 +1,153 @@
-//Function
-//- building block in the program
-//- called 'sub program'
-//- can be used multiple times
-//- performs a task or calculates a value
+//함수 선언 & 호출
 
-//1. Function declaration
-// function name(param1,param2){body...return;}
+//함수 선언: doSomthing이라는 함수를 선언한것이다. 
+// function doSomthing(F) {
+//     console.log(F);
+//     const result = addFunction(2, 3);
+//     console.log(result);
+// }
+
+// function addFunction(a, b) {
+//     const sum = a + b;
+//     return sum;
+// }
+
+//함수 호출
+// doSomthing(addFunction);
+
+// //함수를 변수에 할당하기 
+// const hnk = addFunction;
+// console.log(hnk);
+// console.log(hnk(1, 2)); //3
+
+
+
+
+
+// Function
+// - building block in the program
+// - called subprogram
+// - can be used multiple times
+// - performs a task or calculates a value
+
+// 1. Function declaration
+//function name(param1,param2){body....return;}
 //one function === one thing
 //naming: doSomthing, command, verb
-//createCardAndPoint -> createCard, createPoint
 //function is object in JS
 
-'use strict';
-
 function printHello() {
-    console.log('Hello');
+    console.log('hello');
 }
-printHello();
+printHello(); //hello
 
-function printSomething(message) {
+function log(message) {
     console.log(message);
 }
 
-printSomething(123);
-// 단, js에서는 data type이 정해져있지 않아 number가 아닌 string 으로 변환하여 123을 출력한다.
-// 이러한 문제를 해결하기 위해 typeScript를 사용한다. 
+log("hello hnk"); //hello hnk
+log(1234); //1234
 
-//2. Parameters
-//premitive parameters: passed by vlaue
-//object parameters: passed by reference
-function changeName(obj) {
-    obj.name = 'coder';
+// 2. Parameters
+// primitive parameters: passed by value
+// object parameters: passed by refere nce
+function changeName(somthing) {
+    somthing.nickName = 'developer';
 }
-const hnk = {
-    name: 'hnk'
+const myNmae = {
+    name: 'hnk',
+    nickName: 'coder'
 };
-changeName(hnk);
-console.log(hnk);
+changeName(myNmae);
+console.log(myNmae.nickName); //developer
 
-//3. Default parameters (added in ES6)
+//3. Default parameters(added in ES6)
 function showMessage(message, from = 'unknown') {
     console.log(`${message} by ${from}`);
 }
-showMessage("hnk");
+showMessage('Hi!'); //Hi! by unknown
 
-//4. Rest parameters (added in ES6)
+//4. Rest parameters(added inES6)
 function printAll(...args) {
     for (let i = 0; i < args.length; i++) {
         console.log(args[i]);
     }
-    for (const arg of args) {
-        console.log(arg);
-    }
 }
-printAll('A', 'B', 'C');
+printAll('hnk', 'coder', 'developer');
 
-//5. Local scope
-let globalMessage = 'global'; //global scope
+//5.Local scope
+let globalMessage = 'global';
+
 function printMessage() {
-    let message = 'hello'; //local scope
+    let message = 'hello';
     console.log(message);
-    console.log(globalMessage); // 안에서는 globalMessage를 출력할수있다. 
+    console.log(globalMessage);
 
-    function printAnoter() {
-        let childMessage = "hi";
+    function printAnother() {
+        console.log(message);
+        let childMessage = 'hi';
     }
-    // console.log(childMessage); 함수안에 함수가 있다. 부모함수에서 자식함수의 변수를 열람할수는 없다.
+    // console.log(childMessage); 에러발생
 }
 printMessage();
-// console.log(message); 지역변수를 밖에서 실행하면 에러발생
 
-//6. return a value
-//함수에서는 파라미터로 값들을 전달받아 계산된 값을 return 한다.  
+//6. Return a value
 function sum(a, b) {
     return a + b;
 }
 const result = sum(1, 2);
-console.log(result);
+console.log(sum(1., 2));
 
-//7. Early return, Early exit
-// user.point가 10 이상일 경우에만 업그레이드를 진행하는 logic이 있다고하자. 
-// bad: ~~일때 ~~한다. 처럼 블럭안에서 logic을 많이 작성하면 가독성이 떨어진다. 
-// 이런경우 이렇게if와 else를 번갈아 쓰는건 좋지않다. 
+//6. Early return, early exit
+//bad
 function upgradeUser(user) {
     if (user.point > 10) {
-        //long upgrade logic...
+        //long logic
     }
 }
 //good
-// 조건이 맞지 않을시 바로 return하여 함수를 종료하고 조건이 맞을때 필요한 logic을 실행하는것이 좋다.
 function upgradeUser(user) {
-    if (user.point > 10) {
+    if (user.potint <= 10) {
         return;
     }
+    //long logic...
 }
+
+//7. Callback function using functionexpression 
+function randomQuiz(answer, printYes, printNo) {
+    if (answer === 'love you') {
+        printYes();
+    } else {
+        printNo();
+    }
+}
+
+const printYes = function () {
+    console.log('yes!');
+}
+const printNo = function () {
+    console.log('no!');
+}
+
+randomQuiz('love you', printYes, printNo);
+randomQuiz('hate you', printYes, printNo);
+
+//8. Arrow functionm
+//always anonymous
+const simplePrint = function () {
+    console.log('simplePrint!');
+} //이러한 함수 형태를
+
+const simplePrint = () => console.log('simplePrint!');
+const add = (a, b) => a + b;
+//한줄인 경우 블럭{}이 필요없지만 두줄 이상인 경우 필요하며, 항상 return키워드를 포함하여야 한다. 
+const hnk = () => {
+    console.log('blabla');
+    console.log('blabla');
+    return;
+}
+
+//9. IIFE : Immediately Invoked Function Expresstion 
+(function hello() {
+    console.log('IIFE');
+})();
