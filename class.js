@@ -104,3 +104,32 @@ console.log(triangle.getArea());
 
 //5. instaceOf : Class checking
 console.log(rectangle instanceof Rectangle); //true
+
+
+const numbers = {
+    a: 1,
+    b: 2,
+
+    get sum() {
+        console.log('sum함수가 실행됩니다. ');
+        return this.a + this.b;
+    }
+};
+
+//getter,setter함수를 사용하면 특정값을 바꾸려하거나 조회하려할때 원하는 코드를 실행할수있따. 
+console.log(numbers.sum);
+//함수인데도 불구하고 조회만해도 값을 출력할수있다. 
+numbers.a = 5;
+console.log(numbers.sum);
+//이처럼 getter함수는 특정값을 조회하려고 할때, 특정코드를 실행시키고 연산되 값을 받아서 사용하는것이다. 
+
+const dog = {
+    _name: '멍멍이',
+    set name(value) {
+        console.log('이름이 바뀝니다.' + value);
+        this._name = value;
+    }
+}
+console.log(dog._name); //멍멍이
+dog._name = '야옹이';
+console.log(dog._name);
