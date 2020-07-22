@@ -6,3 +6,6 @@
 
 20.07.22 javascript study
 : object
+
+20.07.23 javascript study
+: array, array API
