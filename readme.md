@@ -9,3 +9,6 @@
 
 20.07.23 javascript study
 : array, array API
+
+20.07.24 javascript study
+: JSON
