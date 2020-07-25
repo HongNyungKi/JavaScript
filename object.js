@@ -82,7 +82,7 @@ printValue(avengers, 'hero1'); //Tony
 
 
 
-//3. Property value shordhad
+//3. Property value shorthand
 const person1 = {
     name: 'Tony',
     number: 1
@@ -110,7 +110,8 @@ console.log(person4);
 //하지만 이때, js에서는 Property value shordhad라는 기능이 있어서 key와 value의 이름이 동일하다면, 생략이 가능하다. 
 
 
-//이렇듯 다른 어떤 연산을 하지 않고, 순수하게 object를 만드는 함수는 함수이름을 대문자로 만들고, return이라는 값을 하지않고, 
+//이렇듯 다른 어떤 연산을 하지 않고, 순수하게 object를 만드는 함수는 함수이름을 대문자로 만들고,
+// return이라는 값을 하지않고, 
 //this를 쓴다. 
 // 이것을 바로
 //4. constructor function이라고한다. 
@@ -124,7 +125,7 @@ function Person(name, number) {
 console.log(person5);
 
 
-//5. inoperator
+//5. in operator
 // 해당하는 object안에 key가 있는지 없는지 확인하는 것이다. 
 console.log('name' in person4); //ture
 

@@ -12,3 +12,6 @@
 
 20.07.24 javascript study
 : JSON
+
+20.07.25 javascript study
+: review - object / array
