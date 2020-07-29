@@ -15,3 +15,6 @@
 
 20.07.25 javascript study
 : review - object / array
+
+20.07.29 javascript study
+: callback, promise, async
