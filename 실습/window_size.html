@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+        integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw=="
+        crossorigin="anonymous" />
+    <title>Window Size</title>
+    <style>
+        .size {
+            font-size: 22px;
+            margin: 20px;
+            background: thistle;
+            display: inline-block;
+            padding: 10px;
+            font-weight: bold;
+            line-height: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="size">
+        <div class="screen"></div>
+        <div class="outer"></div>
+        <div class="inner"></div>
+        <div class="client"></div>
+    </div>
+    <script>
+        const screen = document.querySelector('.screen');
+        const outer = document.querySelector('.outer');
+        const inner = document.querySelector('.inner');
+        const client = document.querySelector('.client');
+
+        function updateSize() {
+            screen.innerHTML =
+                `window.screen.width : ${window.screen.width} / window.screen.height : ${window.screen.height}`;
+            outer.innerHTML = `window.outerWidth: ${window.outerWidth} / window.outerHeight: ${window.outerHeight}`;
+            inner.innerHTML = `window.innerWidth: ${window.innerWidth} / window.innerHeight: ${window.innerHeight}`;
+            client.innerHTML =
+                `document.documentElement.clientWidth : ${document.documentElement.clientWidth}<br />document.documentElement.clientHeight : ${document.documentElement.clientHeight}`
+        }
+        window.addEventListener('resize', () => {
+            updateSize();
+        })
+        updateSize();
+    </script>
+</body>
+
+</html>
