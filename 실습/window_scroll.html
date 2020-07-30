@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window Scroll</title>
+    <style>
+        body {
+            background: black;
+        }
+
+        div {
+            width: 280px;
+            height: 280px;
+            background: blanchedalmond;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+
+        .special {
+            background: lightsalmon;
+            font-weight: bold;
+        }
+
+        aside {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div class="special">
+    </div>
+    <div></div>
+    <div></div>
+    <aside>
+        <button class="scroll_by">Scroll by 100px(y)</button>
+        <button class="scroll_to">Scroll to 100px(y)</button>
+        <button class="scroll_into">Scroll into special</button>
+    </aside>
+    <script>
+        const scrollBy = document.querySelector('.scroll_by');
+        const scrollTo = document.querySelector('.scroll_to');
+        const scrollInto = document.querySelector('.scroll_into');
+        const special = document.querySelector('.special');
+        scrollBy.addEventListener('click', () => {
+            window.scrollBy({
+                top: 100,
+                left: 0,
+                behavior: "smooth"
+            });
+        });
+        scrollTo.addEventListener('click', () => {
+            window.scrollTo(0, 100);
+        });
+        scrollInto.addEventListener('click', () => {
+            special.scrollIntoView();
+        });
+    </script>
+</body>
+
+</html>
