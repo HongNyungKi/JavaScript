@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p {
+            text-align: center;
+            width: 500px;
+            margin: auto;
+        }
+
+        .wrap {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+            margin-top: 30px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 10px;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        h1 {
+            margin: auto;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere quas rerum in consequuntur dolore modi.
+            Officiis earum rerum numquam ipsam possimus molestiae natus tempore iure, a aspernatur eius vel perspiciatis
+            distinctio ullam officia in impedit sit ad nulla aliquid, ducimus optio reprehenderit? Ea sequi iusto fugit
+            animi. Culpa, animi quos!
+        </p>
+        <div class="wrap">
+            <button class="create-btn">
+                Create Title
+            </button>
+            <button class="remove-btn">
+                Remove Title
+            </button>
+        </div>
+    </section>
+    <script>
+        const section = document.querySelector('section');
+        const createBtn = document.querySelector('.create-btn');
+        const removeBtn = document.querySelector('.remove-btn');
+        const h1 = document.createElement('h1');
+
+
+        createBtn.addEventListener('click', () => {
+            h1.setAttribute('class', 'title');
+            h1.textContent = 'This is Title';
+            section.prepend(h1);
+            //insderBefore 메소드로해보기!!
+        });
+        removeBtn.addEventListener('click', () => {
+            h1.remove();
+        })
+    </script>
+</body>
+
+</html>
