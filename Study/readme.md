@@ -18,3 +18,5 @@
 
 20.07.29 javascript study
 : callback, promise, async
+
+20.08.01 Mac Settings
