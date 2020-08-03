@@ -20,3 +20,5 @@
 : callback, promise, async
 
 20.08.01 Mac Settings.
+
+[settings Mac]
