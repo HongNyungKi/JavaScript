@@ -50,6 +50,7 @@ button {
     font-size: 32px;
     margin-top: var(--header-margin);
     border-radius: 20px;
+    visibility: hidden;
 }
 
 .game__score {
@@ -64,12 +65,14 @@ button {
     color: white;
     margin-top: var(--header-margin);
     border: 3px solid black;
+    visibility: hidden;
 }
 
 .game__field {
     width: 100%;
     height: 100%;
     margin-top: 50px;
+    position: relative;
 }
 
 .pop-up {
