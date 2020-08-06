@@ -22,3 +22,5 @@
 20.08.01 Mac Settings.
 
 [settings Mac]
+
+20.08.06 js engine,runtime
