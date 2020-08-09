@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 $header-margin: 10px;
 
 button {
@@ -11,6 +12,7 @@ button {
 
 body {
   background: black;
+
   .game {
     position: relative;
     width: 1000px;
@@ -28,6 +30,7 @@ body {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
       .header__btn {
         margin-top: $header-margin * 2;
         width: 75px;
@@ -37,10 +40,12 @@ body {
         border: 5px solid black;
         border-radius: 5px;
         transition: all 80ms ease-in;
+
         &:hover {
           transform: scale(1.1);
         }
       }
+
       .header__time {
         margin-top: $header-margin;
         width: 120px;
@@ -49,9 +54,9 @@ body {
         border: 3px solid black;
         border-radius: 10px;
         font-size: 40px;
-        padding: 5px 0;
         text-align: center;
       }
+
       .header__count {
         margin-top: $header-margin;
         width: 65px;
@@ -61,17 +66,18 @@ body {
         font-size: 50px;
         font-weight: bold;
         text-align: center;
-        padding: 9px 0;
         border: 3px solid black;
         border-radius: 50%;
       }
     }
+
     .game__field {
-      //   background: red;
-      //   opacity: 0.5;
       width: 100%;
       height: 100%;
+      position: relative;
+      // background-image: url('./img/IronMan.png');
     }
+
     .pop-up {
       width: 600px;
       height: 350px;
@@ -80,6 +86,7 @@ body {
       left: 50%;
       transform: translate(-50%);
       visibility: hidden;
+
       .pop-up__wrap {
         position: absolute;
         top: 50%;
@@ -87,6 +94,7 @@ body {
         transform: translate(-50%, -50%);
         display: flex;
         flex-direction: column;
+
         .pop-up__refresh {
           background: wheat;
           width: 100px;
@@ -96,10 +104,12 @@ body {
           font-size: 40px;
           margin: auto;
           transition: all 100ms ease-in;
+
           &:hover {
             transform: scale(1.1) rotate(45deg);
           }
         }
+
         .pop-up__message {
           margin-top: $header-margin;
           color: white;

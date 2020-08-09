@@ -117,43 +117,56 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-"use strict";
+})({"js-modules/addItem.js":[function(require,module,exports) {
+'use strict'; // 이미지를 랜덤으로 배치하는 함수입니다. 
 
-var IMGSIZE = 80;
-var IronManCount = 5;
-var playBtn = document.querySelector(".header__btn");
-var gameField = document.querySelector(".game__field");
-var field = document.querySelector(".game__field");
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addItem = addItem;
+var field = document.querySelector('.game__field');
 var fieldRect = field.getBoundingClientRect();
-playBtn.addEventListener("click", startGame);
-
-function startGame() {
-  initGame();
-} // function initGame() {
-//   field.innerHTML = "";
-//   addIem("IronMan", IronManCount, "img/IronMan.png");
-// }
-
+var imgWidthSize = 80;
+var imgHeightSize = 100;
 
 function addItem(className, count, imgPath) {
-  for (i = 0; i < count; i++) {
-    var x1 = 0;
-    var y1 = 0;
-    var x2 = field.getBoundingClientRect().width;
-    var y2 = field.getBoundingClientRect().height;
+  var x1 = 0;
+  var y1 = 0;
+  var x2 = fieldRect.width - imgWidthSize;
+  var y2 = fieldRect.height - imgHeightSize;
+  field.innerHTML = '';
+
+  for (var i = 0; i < count; i++) {
+    var item = document.createElement('img');
     var x = randomNumber(x1, x2);
     var y = randomNumber(y1, y2);
-    var item = document.createElement("img");
-    item.setAttribute("class", className);
-    item.setAttribute("src", imgPath);
-    item.style.position = "absolute";
+    item.setAttribute('class', className);
+    item.setAttribute('src', imgPath);
+    item.style.position = 'absolute';
     item.style.left = "".concat(x, "px");
     item.style.top = "".concat(y, "px");
     field.appendChild(item);
   }
 }
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+function randomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
+},{}],"main.js":[function(require,module,exports) {
+"use strict";
+
+var _addItem = require("./js-modules/addItem");
+
+var playBtn = document.querySelector('.header__btn');
+var IronManCount = 5;
+playBtn.addEventListener('click', function () {
+  startGame();
+});
+
+function startGame() {
+  (0, _addItem.addItem)('IronMan', IronManCount, './IronMan.a44b6e8e.png');
+}
+},{"./js-modules/addItem":"js-modules/addItem.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -181,7 +194,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49361" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60285" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -357,5 +370,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
+},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
 //# sourceMappingURL=/main.1f19ae8e.js.map
