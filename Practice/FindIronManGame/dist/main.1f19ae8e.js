@@ -127,14 +127,13 @@ exports.addItem = addItem;
 var field = document.querySelector('.game__field');
 var fieldRect = field.getBoundingClientRect();
 var imgWidthSize = 80;
-var imgHeightSize = 100;
+var imgHeightSize = 115;
 
 function addItem(className, count, imgPath) {
   var x1 = 0;
   var y1 = 0;
   var x2 = fieldRect.width - imgWidthSize;
   var y2 = fieldRect.height - imgHeightSize;
-  field.innerHTML = '';
 
   for (var i = 0; i < count; i++) {
     var item = document.createElement('img');
@@ -159,12 +158,18 @@ var _addItem = require("./js-modules/addItem");
 
 var playBtn = document.querySelector('.header__btn');
 var IronManCount = 5;
+var itemCount = 3;
+var field = document.querySelector('.game__field');
 playBtn.addEventListener('click', function () {
   startGame();
 });
 
 function startGame() {
+  field.innerHTML = '';
   (0, _addItem.addItem)('IronMan', IronManCount, './IronMan.a44b6e8e.png');
+  (0, _addItem.addItem)('CaptainAmerica', itemCount, './CaptainAmerica.fbcd2c59.png');
+  (0, _addItem.addItem)('Hulk', itemCount, '/Hulk.27b33131.png');
+  (0, _addItem.addItem)('SpiderMan', itemCount, '/SpiderMan.04c09517.png');
 }
 },{"./js-modules/addItem":"js-modules/addItem.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -194,7 +199,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60285" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52467" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
