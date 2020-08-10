@@ -151,27 +151,114 @@ function addItem(className, count, imgPath) {
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
+},{}],"js-modules/showStopBtn.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.showStopBtn = showStopBtn;
+
+function showStopBtn() {
+  var playBtn = document.querySelector('.header__btn-play');
+  var stopBtn = document.querySelector('.header__btn-stop');
+  playBtn.style.display = 'none';
+  stopBtn.style.display = 'block';
+}
+},{}],"js-modules/showTimerAndCount.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.showTimerAndCount = showTimerAndCount;
+
+function showTimerAndCount() {
+  var timer = document.querySelector('.header__time');
+  var count = document.querySelector('.header__count');
+  timer.style.visibility = 'visible';
+  count.style.visibility = 'visible';
+}
+},{}],"js-modules/startGameCounter.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.startGameCounter = startGameCounter;
+var gameDuration = 7;
+var gameTimer = document.querySelector('.header__time');
+
+function startGameCounter() {
+  var timer = undefined;
+  var remainingTime = gameDuration;
+  updateTimerText(gameDuration);
+  timer = setInterval(function () {
+    if (remainingTime <= 0) {
+      clearInterval(timer);
+      return;
+    }
+
+    updateTimerText(--remainingTime);
+  }, 1000);
+}
+
+function updateTimerText(time) {
+  var minutes = Math.floor(time / 60);
+  var seconds = time % 60;
+  gameTimer.innerText = "".concat(minutes, ":").concat(seconds);
+}
+},{}],"js-modules/heroClick.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.heroClick = heroClick;
+
+function heroClick(e) {
+  var target = e.target;
+
+  if (target.matches('.IronMan')) {
+    target.remove();
+  }
+}
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
 
 var _addItem = require("./js-modules/addItem");
 
-var playBtn = document.querySelector('.header__btn');
-var IronManCount = 5;
-var itemCount = 3;
+var _showStopBtn = require("./js-modules/showStopBtn");
+
+var _showTimerAndCount = require("./js-modules/showTimerAndCount");
+
+var _startGameCounter = require("./js-modules/startGameCounter");
+
+var _heroClick = require("./js-modules/heroClick");
+
+var playBtn = document.querySelector('.header__btn-play');
 var field = document.querySelector('.game__field');
 playBtn.addEventListener('click', function () {
   startGame();
 });
 
 function startGame() {
+  var IronManCount = 5;
+  var itemCount = 3;
   field.innerHTML = '';
   (0, _addItem.addItem)('IronMan', IronManCount, './IronMan.a44b6e8e.png');
   (0, _addItem.addItem)('CaptainAmerica', itemCount, './CaptainAmerica.fbcd2c59.png');
   (0, _addItem.addItem)('Hulk', itemCount, '/Hulk.27b33131.png');
   (0, _addItem.addItem)('SpiderMan', itemCount, '/SpiderMan.04c09517.png');
+  (0, _showStopBtn.showStopBtn)();
+  (0, _showTimerAndCount.showTimerAndCount)();
+  (0, _startGameCounter.startGameCounter)();
 }
-},{"./js-modules/addItem":"js-modules/addItem.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+field.addEventListener('click', function (e) {
+  (0, _heroClick.heroClick)(e);
+});
+},{"./js-modules/addItem":"js-modules/addItem.js","./js-modules/showStopBtn":"js-modules/showStopBtn.js","./js-modules/showTimerAndCount":"js-modules/showTimerAndCount.js","./js-modules/startGameCounter":"js-modules/startGameCounter.js","./js-modules/heroClick":"js-modules/heroClick.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -199,7 +286,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52467" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60285" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

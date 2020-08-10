@@ -29,7 +29,7 @@ body .game .game__header {
   justify-content: center;
   align-items: center;
 }
-body .game .game__header .header__btn {
+body .game .game__header .header__btn-play {
   margin-top: 20px;
   width: 75px;
   height: 75px;
@@ -39,7 +39,21 @@ body .game .game__header .header__btn {
   border-radius: 5px;
   transition: all 80ms ease-in;
 }
-body .game .game__header .header__btn:hover {
+body .game .game__header .header__btn-play:hover {
+  transform: scale(1.1);
+}
+body .game .game__header .header__btn-stop {
+  margin-top: 20px;
+  width: 75px;
+  height: 75px;
+  background: #fca311;
+  font-size: 30px;
+  border: 5px solid black;
+  border-radius: 5px;
+  transition: all 80ms ease-in;
+  display: none;
+}
+body .game .game__header .header__btn-stop:hover {
   transform: scale(1.1);
 }
 body .game .game__header .header__time {
@@ -51,6 +65,7 @@ body .game .game__header .header__time {
   border-radius: 10px;
   font-size: 40px;
   text-align: center;
+  visibility: hidden;
 }
 body .game .game__header .header__count {
   margin-top: 10px;
@@ -63,6 +78,7 @@ body .game .game__header .header__count {
   text-align: center;
   border: 3px solid black;
   border-radius: 50%;
+  visibility: hidden;
 }
 body .game .game__field {
   width: 100%;
