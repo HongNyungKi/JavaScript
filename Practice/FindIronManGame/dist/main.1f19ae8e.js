@@ -117,17 +117,46 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"js-modules/addItem.js":[function(require,module,exports) {
-'use strict'; // 이미지를 랜덤으로 배치하는 함수입니다. 
+})({"main.js":[function(require,module,exports) {
+"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.addItem = addItem;
+var playBtn = document.querySelector('.header__btn-play');
+var stopBtn = document.querySelector('.header__btn-stop');
+var IronManCount = 5;
+var itemCount = 3;
 var field = document.querySelector('.game__field');
 var fieldRect = field.getBoundingClientRect();
 var imgWidthSize = 80;
 var imgHeightSize = 115;
+var gameDuration = 7;
+var timer = document.querySelector('.header__time');
+var count = document.querySelector('.header__count');
+var popUp = document.querySelector('.pop-up');
+var popUpMessage = document.querySelector('.pop-up__message');
+var refreshBtn = document.querySelector('.pop-up__refresh');
+var started = undefined;
+var gametimer = undefined;
+var remainingTime = gameDuration; // 플레이 버튼 클릭시
+
+playBtn.addEventListener('click', function () {
+  if (started) {
+    stopGame();
+  } else {
+    startGame();
+  }
+});
+
+function startGame() {
+  started = true;
+  field.innerHTML = '';
+  addItem('IronMan', IronManCount, './IronMan.a44b6e8e.png');
+  addItem('Hero', itemCount, './CaptainAmerica.fbcd2c59.png');
+  addItem('Hero', itemCount, '/Hulk.27b33131.png');
+  addItem('Hero', itemCount, '/SpiderMan.04c09517.png');
+  showStopBtn();
+  showTimerAndCount();
+  startGameCounter();
+}
 
 function addItem(className, count, imgPath) {
   var x1 = 0;
@@ -151,52 +180,23 @@ function addItem(className, count, imgPath) {
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
-},{}],"js-modules/showStopBtn.js":[function(require,module,exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.showStopBtn = showStopBtn;
 
 function showStopBtn() {
-  var playBtn = document.querySelector('.header__btn-play');
-  var stopBtn = document.querySelector('.header__btn-stop');
   playBtn.style.display = 'none';
   stopBtn.style.display = 'block';
 }
-},{}],"js-modules/showTimerAndCount.js":[function(require,module,exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.showTimerAndCount = showTimerAndCount;
 
 function showTimerAndCount() {
-  var timer = document.querySelector('.header__time');
-  var count = document.querySelector('.header__count');
   timer.style.visibility = 'visible';
   count.style.visibility = 'visible';
 }
-},{}],"js-modules/startGameCounter.js":[function(require,module,exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.startGameCounter = startGameCounter;
-var gameDuration = 7;
-var gameTimer = document.querySelector('.header__time');
 
 function startGameCounter() {
-  var timer = undefined;
-  var remainingTime = gameDuration;
   updateTimerText(gameDuration);
-  timer = setInterval(function () {
+  gametimer = setInterval(function () {
     if (remainingTime <= 0) {
-      clearInterval(timer);
-      return;
+      clearInterval(gametimer);
+      finishGame(false);
     }
 
     updateTimerText(--remainingTime);
@@ -206,59 +206,70 @@ function startGameCounter() {
 function updateTimerText(time) {
   var minutes = Math.floor(time / 60);
   var seconds = time % 60;
-  gameTimer.innerText = "".concat(minutes, ":").concat(seconds);
-}
-},{}],"js-modules/heroClick.js":[function(require,module,exports) {
-'use strict';
+  timer.innerText = "".concat(minutes, ":").concat(seconds);
+} // 캐릭터 아이템 클릭시
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.heroClick = heroClick;
+
+field.addEventListener('click', heroClick);
+var score = 0;
 
 function heroClick(e) {
   var target = e.target;
 
   if (target.matches('.IronMan')) {
     target.remove();
+    score++;
+    updateCount();
+
+    if (score === IronManCount) {
+      finishGame(score === IronManCount);
+    }
+  } else if (target.matches(['.Hero'])) {
+    finishGame(score === IronManCount);
   }
 }
-},{}],"main.js":[function(require,module,exports) {
-"use strict";
 
-var _addItem = require("./js-modules/addItem");
-
-var _showStopBtn = require("./js-modules/showStopBtn");
-
-var _showTimerAndCount = require("./js-modules/showTimerAndCount");
-
-var _startGameCounter = require("./js-modules/startGameCounter");
-
-var _heroClick = require("./js-modules/heroClick");
-
-var playBtn = document.querySelector('.header__btn-play');
-var field = document.querySelector('.game__field');
-playBtn.addEventListener('click', function () {
-  startGame();
-});
-
-function startGame() {
-  var IronManCount = 5;
-  var itemCount = 3;
-  field.innerHTML = '';
-  (0, _addItem.addItem)('IronMan', IronManCount, './IronMan.a44b6e8e.png');
-  (0, _addItem.addItem)('CaptainAmerica', itemCount, './CaptainAmerica.fbcd2c59.png');
-  (0, _addItem.addItem)('Hulk', itemCount, '/Hulk.27b33131.png');
-  (0, _addItem.addItem)('SpiderMan', itemCount, '/SpiderMan.04c09517.png');
-  (0, _showStopBtn.showStopBtn)();
-  (0, _showTimerAndCount.showTimerAndCount)();
-  (0, _startGameCounter.startGameCounter)();
+function updateCount() {
+  count.innerText = IronManCount - score;
 }
 
-field.addEventListener('click', function (e) {
-  (0, _heroClick.heroClick)(e);
+function finishGame(result) {
+  started = false;
+  showPopupWidthText(result ? 'YOU WIN!' : 'YOU LOSE!');
+  hideTimerAndCount();
+}
+
+function showPopupWidthText(text) {
+  popUp.style.visibility = 'visible';
+  popUpMessage.innerText = text;
+}
+
+function hideTimerAndCount() {
+  timer.style.visibility = 'hidden';
+  count.style.visibility = 'hidden';
+} // 정지버튼 클릭시
+
+
+stopBtn.addEventListener('click', function () {
+  stopGame();
 });
-},{"./js-modules/addItem":"js-modules/addItem.js","./js-modules/showStopBtn":"js-modules/showStopBtn.js","./js-modules/showTimerAndCount":"js-modules/showTimerAndCount.js","./js-modules/startGameCounter":"js-modules/startGameCounter.js","./js-modules/heroClick":"js-modules/heroClick.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+function stopGame() {
+  started = false;
+  field.innerHTML = '';
+  showPopupWidthText('Replay?');
+  clearInterval(gametimer);
+} //리플레이 버튼 클릭시
+
+
+popUp.addEventListener('click', function () {
+  text();
+});
+
+function text() {
+  startGame();
+}
+},{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -286,7 +297,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60285" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49714" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
