@@ -117,58 +117,74 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-"use strict";
+})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-var field = document.querySelector(".game__field");
-var fieldRect = field.getBoundingClientRect();
-var heroWidth = 80;
-var heroHeight = 115;
-var gameBtn = document.querySelector(".header__btn-play");
-var gameTimer = document.querySelector(".header__time");
-var gameScore = document.querySelector(".header__count");
-var started = false; //게임이 시작되었는지, 안됬는지 알수있도록.
-
-var timer = undefined; // 얼마만의 시간이 남았는지 기억하기위해.
-
-var score = 0; // 최종적인 점수를 기억해야하기때문에.
-
-gameBtn.addEventListener("click", function () {
-  if (started) {
-    stopGame();
-  } else if (!started) {
-    startGame();
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
-});
 
-function settingGame() {
-  addItem("IronMan", 5, "img/IronMan.png");
-  addItem("CaptainAmerica", 3, "img/CaptainAmerica");
+  return bundleURL;
 }
 
-function addItem(className, count, imgPath) {
-  var x1 = 0;
-  var y1 = 0;
-  var x2 = fieldRect.width - heroWidth;
-  var y2 = fieldRect.height - heroHeight;
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
 
-  for (var i = 0; i < count; i++) {
-    var item = document.createElement("img");
-    item.setAttribute("class", className);
-    item.setAttribute("src", imgPath);
-    item.style.position = "absolute";
-    var x = randomNumber(x1, x2);
-    var y = randomNumber(y1, y2);
-    item.style.left = "".concat(x, "px");
-    item.style.top = "".concat(y, "px");
-    field.appendChild(item);
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
   }
+
+  return '/';
 }
 
-function randomNumber(min, max) {
-  return Math.random() * (max - min) + min;
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
 }
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -372,5 +388,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
-//# sourceMappingURL=/main.1f19ae8e.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/index.js.map

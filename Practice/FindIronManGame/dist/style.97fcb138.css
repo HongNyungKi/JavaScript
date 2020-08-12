@@ -44,7 +44,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center; }
-      body .game .game__header .header__count {
+      body .game .game__header .header__score {
         width: 55px;
         height: 55px;
         font-size: 40px;
@@ -58,7 +58,8 @@ body {
         align-items: center; }
     body .game .game__field {
       width: 100%;
-      height: 100%; }
+      height: 100%;
+      position: relative; }
   body .pop-up {
     text-align: center;
     margin: auto;
