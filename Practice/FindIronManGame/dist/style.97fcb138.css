@@ -44,7 +44,9 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        visibility: hidden; }
+        visibility: hidden;
+        user-select: none;
+        cursor: auto; }
       body .game .game__header .header__score {
         width: 55px;
         height: 55px;
@@ -57,11 +59,18 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        visibility: hidden; }
+        visibility: hidden;
+        user-select: none;
+        cursor: auto; }
     body .game .game__field {
       width: 100%;
       height: 100%;
       position: relative; }
+      body .game .game__field img {
+        transition: all 100ms ease-in; }
+      body .game .game__field .IronMan:hover,
+      body .game .game__field .hero:hover {
+        transform: scale(1.1); }
   body .pop-up {
     text-align: center;
     margin: auto;

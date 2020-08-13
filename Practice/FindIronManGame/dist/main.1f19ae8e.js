@@ -165,13 +165,21 @@ function stopGame() {
 } //아이템(hero)을 클릭시 발생하는 이벤트
 
 
-field.addEventListener("click", onfieldClick);
+field.addEventListener("click", onfieldClick); //리플레이 버튼 클릭시
+
+popupRefresh.addEventListener("click", function () {
+  startGame();
+  hidePopup();
+});
 
 function settingGame() {
+  score = 0;
   field.innerHTML = "";
   gameScore.innerText = ironManCount;
-  addItem("IronMan", 5, "img/IronMan.png");
-  addItem("CaptainAmerica", 3, "img/CaptainAmerica");
+  addItem("IronMan", ironManCount, "IronMan.a44b6e8e.png");
+  addItem("hero", 3, "CaptainAmerica.fbcd2c59.png");
+  addItem("hero", 3, "SpiderMan.04c09517.png");
+  addItem("hero", 3, "Hulk.27b33131.png");
 }
 
 function addItem(className, count, imgPath) {
@@ -198,9 +206,10 @@ function randomNumber(min, max) {
 }
 
 function showStopBtn() {
-  var icon = document.querySelector(".fa-play");
+  var icon = document.querySelector(".fas");
   icon.classList.add("fa-stop");
   icon.classList.remove("fa-play");
+  gameBtn.style.visibility = "visible";
 }
 
 function showTimeAndScore() {
@@ -214,6 +223,7 @@ function startGameTimer() {
   timer = setInterval(function () {
     if (remainingTimeSec <= 0) {
       clearInterval(timer);
+      finishGame(score === ironManCount);
       return;
     }
 
@@ -245,7 +255,34 @@ function onfieldClick(event) {
     return;
   }
 
-  console.log(event);
+  var target = event.target;
+
+  if (target.matches(".IronMan")) {
+    target.remove();
+    score++;
+    updateScore();
+
+    if (score === ironManCount) {
+      finishGame(true);
+    }
+  } else if (target.matches(".hero")) {
+    stopGameTimer();
+    finishGame(false);
+  }
+}
+
+function updateScore() {
+  gameScore.innerText = ironManCount - score;
+}
+
+function finishGame(win) {
+  started = false;
+  hideGameBtn();
+  showPopupWidthText(win ? "YOU WIN!" : "YOU LOSE!");
+}
+
+function hidePopup() {
+  popUp.classList.add("pop-up--hide");
 }
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -275,7 +312,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50155" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52017" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
