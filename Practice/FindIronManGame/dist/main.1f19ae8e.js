@@ -124,11 +124,14 @@ var field = document.querySelector(".game__field");
 var fieldRect = field.getBoundingClientRect();
 var heroWidth = 80;
 var heroHeight = 115;
-var gameBtn = document.querySelector(".header__btn-play");
+var gameBtn = document.querySelector(".header__btn");
 var gameTimer = document.querySelector(".header__time");
 var gameScore = document.querySelector(".header__score");
 var ironManCount = 5;
 var gameDuration = 5;
+var popUp = document.querySelector(".pop-up");
+var popupMessage = document.querySelector(".pop-up__message");
+var popupRefresh = document.querySelector(".pop-up__refresh");
 var started = false; //게임이 시작되었는지, 안됬는지 알수있도록.
 
 var timer = undefined; // 얼마만의 시간이 남았는지 기억하기위해.
@@ -138,20 +141,31 @@ var score = 0; // 최종적인 점수를 기억해야하기때문에.
 gameBtn.addEventListener("click", function () {
   // 게임이 시작되었다면, 중지해야하는 기능을 입력하고,
   // 게임이 시작되지 않았다면, 게임시작을 위한 세팅을 한다.
-  if (started) {
-    stopGame();
-  } else if (!started) {
+  if (!started) {
     startGame();
-  } // started = !started;
-
-}); // stopGame(){}
+  } else if (started) {
+    stopGame();
+  }
+}); //게임이 시작되었을 경우 실행되는 함수들
 
 function startGame() {
   settingGame();
   showStopBtn();
   showTimeAndScore();
   startGameTimer();
-}
+  started = true;
+} //게임이 중지되었을 경우 실행되는 함수들
+
+
+function stopGame() {
+  stopGameTimer();
+  hideGameBtn();
+  showPopupWidthText("REPLAY?");
+  started = false;
+} //아이템(hero)을 클릭시 발생하는 이벤트
+
+
+field.addEventListener("click", onfieldClick);
 
 function settingGame() {
   field.innerHTML = "";
@@ -212,6 +226,27 @@ function updateTimerText(time) {
   var seconds = time % 60;
   gameTimer.innerText = "".concat(minutes, ":").concat(seconds);
 }
+
+function stopGameTimer() {
+  clearInterval(timer);
+}
+
+function hideGameBtn() {
+  gameBtn.style.visibility = "hidden";
+}
+
+function showPopupWidthText(text) {
+  popUp.classList.remove("pop-up--hide");
+  popupMessage.innerText = text;
+}
+
+function onfieldClick(event) {
+  if (!started) {
+    return;
+  }
+
+  console.log(event);
+}
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -240,7 +275,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49729" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50155" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
