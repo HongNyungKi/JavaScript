@@ -126,7 +126,9 @@ var heroWidth = 80;
 var heroHeight = 115;
 var gameBtn = document.querySelector(".header__btn-play");
 var gameTimer = document.querySelector(".header__time");
-var gameScore = document.querySelector(".header__count");
+var gameScore = document.querySelector(".header__score");
+var ironManCount = 5;
+var gameDuration = 5;
 var started = false; //게임이 시작되었는지, 안됬는지 알수있도록.
 
 var timer = undefined; // 얼마만의 시간이 남았는지 기억하기위해.
@@ -134,14 +136,26 @@ var timer = undefined; // 얼마만의 시간이 남았는지 기억하기위해
 var score = 0; // 최종적인 점수를 기억해야하기때문에.
 
 gameBtn.addEventListener("click", function () {
+  // 게임이 시작되었다면, 중지해야하는 기능을 입력하고,
+  // 게임이 시작되지 않았다면, 게임시작을 위한 세팅을 한다.
   if (started) {
     stopGame();
   } else if (!started) {
     startGame();
-  }
-});
+  } // started = !started;
+
+}); // stopGame(){}
+
+function startGame() {
+  settingGame();
+  showStopBtn();
+  showTimeAndScore();
+  startGameTimer();
+}
 
 function settingGame() {
+  field.innerHTML = "";
+  gameScore.innerText = ironManCount;
   addItem("IronMan", 5, "img/IronMan.png");
   addItem("CaptainAmerica", 3, "img/CaptainAmerica");
 }
@@ -167,6 +181,36 @@ function addItem(className, count, imgPath) {
 
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+function showStopBtn() {
+  var icon = document.querySelector(".fa-play");
+  icon.classList.add("fa-stop");
+  icon.classList.remove("fa-play");
+}
+
+function showTimeAndScore() {
+  gameTimer.style.visibility = "visible";
+  gameScore.style.visibility = "visible";
+}
+
+function startGameTimer() {
+  var remainingTimeSec = gameDuration;
+  updateTimerText(remainingTimeSec);
+  timer = setInterval(function () {
+    if (remainingTimeSec <= 0) {
+      clearInterval(timer);
+      return;
+    }
+
+    updateTimerText(--remainingTimeSec);
+  }, 1000);
+}
+
+function updateTimerText(time) {
+  var minutes = Math.floor(time / 60);
+  var seconds = time % 60;
+  gameTimer.innerText = "".concat(minutes, ":").concat(seconds);
 }
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -196,7 +240,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51274" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49729" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

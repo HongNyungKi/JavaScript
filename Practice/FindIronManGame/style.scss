@@ -48,6 +48,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        visibility: hidden;
       }
       .header__score {
         width: 55px;
@@ -61,6 +62,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        visibility: hidden;
       }
     }
     .game__field {
