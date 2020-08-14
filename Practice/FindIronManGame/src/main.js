@@ -1,17 +1,20 @@
 "use strict";
 
-const field = document.querySelector(".game__field");
-const fieldRect = field.getBoundingClientRect();
+
 const heroWidth = 80;
 const heroHeight = 115;
 const gameBtn = document.querySelector(".header__btn");
 const gameTimer = document.querySelector(".header__time");
 const gameScore = document.querySelector(".header__score");
 const ironManCount = 5;
+const heroCount = 3;
 const gameDuration = 5;
 const popUp = document.querySelector(".pop-up");
 const popupMessage = document.querySelector(".pop-up__message");
 const popupRefresh = document.querySelector(".pop-up__refresh");
+const field = document.querySelector(".game__field");
+const fieldRect = field.getBoundingClientRect();
+
 
 let started = false; //게임이 시작되었는지, 안됬는지 알수있도록.
 let timer = undefined; // 얼마만의 시간이 남았는지 기억하기위해.
@@ -58,9 +61,9 @@ function settingGame() {
   field.innerHTML = "";
   gameScore.innerText = ironManCount;
   addItem("IronMan", ironManCount, "IronMan.a44b6e8e.png");
-  addItem("hero", 3, "CaptainAmerica.fbcd2c59.png");
-  addItem("hero", 3, "SpiderMan.04c09517.png");
-  addItem("hero", 3, "Hulk.27b33131.png");
+  addItem("hero", heroCount, "CaptainAmerica.fbcd2c59.png");
+  addItem("hero", heroCount, "SpiderMan.04c09517.png");
+  addItem("hero", heroCount, "Hulk.27b33131.png");
 }
 
 function addItem(className, count, imgPath) {

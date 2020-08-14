@@ -117,79 +117,175 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"src/main.js":[function(require,module,exports) {
+"use strict";
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+var heroWidth = 80;
+var heroHeight = 115;
+var gameBtn = document.querySelector(".header__btn");
+var gameTimer = document.querySelector(".header__time");
+var gameScore = document.querySelector(".header__score");
+var ironManCount = 5;
+var heroCount = 3;
+var gameDuration = 5;
+var popUp = document.querySelector(".pop-up");
+var popupMessage = document.querySelector(".pop-up__message");
+var popupRefresh = document.querySelector(".pop-up__refresh");
+var field = document.querySelector(".game__field");
+var fieldRect = field.getBoundingClientRect();
+var started = false; //게임이 시작되었는지, 안됬는지 알수있도록.
+
+var timer = undefined; // 얼마만의 시간이 남았는지 기억하기위해.
+
+var score = 0; // 최종적인 점수를 기억해야하기때문에.
+
+gameBtn.addEventListener("click", function () {
+  // 게임이 시작되었다면, 중지해야하는 기능을 입력하고,
+  // 게임이 시작되지 않았다면, 게임시작을 위한 세팅을 한다.
+  if (!started) {
+    startGame();
+  } else if (started) {
+    stopGame();
   }
+}); //게임이 시작되었을 경우 실행되는 함수들
 
-  return bundleURL;
+function startGame() {
+  settingGame();
+  showStopBtn();
+  showTimeAndScore();
+  startGameTimer();
+  started = true;
+} //게임이 중지되었을 경우 실행되는 함수들
+
+
+function stopGame() {
+  stopGameTimer();
+  hideGameBtn();
+  showPopupWidthText("REPLAY?");
+  started = false;
+} //아이템(hero)을 클릭시 발생하는 이벤트
+
+
+field.addEventListener("click", onfieldClick); //리플레이 버튼 클릭시
+
+popupRefresh.addEventListener("click", function () {
+  startGame();
+  hidePopup();
+});
+
+function settingGame() {
+  score = 0;
+  field.innerHTML = "";
+  gameScore.innerText = ironManCount;
+  addItem("IronMan", ironManCount, "IronMan.a44b6e8e.png");
+  addItem("hero", heroCount, "CaptainAmerica.fbcd2c59.png");
+  addItem("hero", heroCount, "SpiderMan.04c09517.png");
+  addItem("hero", heroCount, "Hulk.27b33131.png");
 }
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+function addItem(className, count, imgPath) {
+  var x1 = 0;
+  var y1 = 0;
+  var x2 = fieldRect.width - heroWidth;
+  var y2 = fieldRect.height - heroHeight;
 
-    if (matches) {
-      return getBaseURL(matches[0]);
+  for (var i = 0; i < count; i++) {
+    var item = document.createElement("img");
+    item.setAttribute("class", className);
+    item.setAttribute("src", imgPath);
+    item.style.position = "absolute";
+    var x = randomNumber(x1, x2);
+    var y = randomNumber(y1, y2);
+    item.style.left = "".concat(x, "px");
+    item.style.top = "".concat(y, "px");
+    field.appendChild(item);
+  }
+}
+
+function randomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function showStopBtn() {
+  var icon = document.querySelector(".fas");
+  icon.classList.add("fa-stop");
+  icon.classList.remove("fa-play");
+  gameBtn.style.visibility = "visible";
+}
+
+function showTimeAndScore() {
+  gameTimer.style.visibility = "visible";
+  gameScore.style.visibility = "visible";
+}
+
+function startGameTimer() {
+  var remainingTimeSec = gameDuration;
+  updateTimerText(remainingTimeSec);
+  timer = setInterval(function () {
+    if (remainingTimeSec <= 0) {
+      clearInterval(timer);
+      finishGame(score === ironManCount);
+      return;
     }
-  }
 
-  return '/';
+    updateTimerText(--remainingTimeSec);
+  }, 1000);
 }
 
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+function updateTimerText(time) {
+  var minutes = Math.floor(time / 60);
+  var seconds = time % 60;
+  gameTimer.innerText = "".concat(minutes, ":").concat(seconds);
 }
 
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
+function stopGameTimer() {
+  clearInterval(timer);
 }
 
-var cssTimeout = null;
+function hideGameBtn() {
+  gameBtn.style.visibility = "hidden";
+}
 
-function reloadCSS() {
-  if (cssTimeout) {
+function showPopupWidthText(text) {
+  popUp.classList.remove("pop-up--hide");
+  popupMessage.innerText = text;
+}
+
+function onfieldClick(event) {
+  if (!started) {
     return;
   }
 
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
+  var target = event.target;
 
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
+  if (target.matches(".IronMan")) {
+    target.remove();
+    score++;
+    updateScore();
+
+    if (score === ironManCount) {
+      finishGame(true);
     }
-
-    cssTimeout = null;
-  }, 50);
+  } else if (target.matches(".hero")) {
+    stopGameTimer();
+    finishGame(false);
+  }
 }
 
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
+function updateScore() {
+  gameScore.innerText = ironManCount - score;
+}
 
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./img\\GalaxyBackground.jpg":[["GalaxyBackground.0f7c42c1.jpg","img/GalaxyBackground.jpg"],"img/GalaxyBackground.jpg"],"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+function finishGame(win) {
+  started = false;
+  hideGameBtn();
+  showPopupWidthText(win ? "YOU WIN!" : "YOU LOSE!");
+}
+
+function hidePopup() {
+  popUp.classList.add("pop-up--hide");
+}
+},{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -393,5 +489,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/style.97fcb138.js.map
+},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/main.js"], null)
+//# sourceMappingURL=/main.1e43358e.js.map
