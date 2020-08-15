@@ -120,18 +120,19 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"main.js":[function(require,module,exports) {
 "use strict";
 
-var field = document.querySelector(".game__field");
-var fieldRect = field.getBoundingClientRect();
 var heroWidth = 80;
 var heroHeight = 115;
 var gameBtn = document.querySelector(".header__btn");
 var gameTimer = document.querySelector(".header__time");
 var gameScore = document.querySelector(".header__score");
 var ironManCount = 5;
+var heroCount = 3;
 var gameDuration = 5;
 var popUp = document.querySelector(".pop-up");
 var popupMessage = document.querySelector(".pop-up__message");
 var popupRefresh = document.querySelector(".pop-up__refresh");
+var field = document.querySelector(".game__field");
+var fieldRect = field.getBoundingClientRect();
 var started = false; //게임이 시작되었는지, 안됬는지 알수있도록.
 
 var timer = undefined; // 얼마만의 시간이 남았는지 기억하기위해.
@@ -177,9 +178,9 @@ function settingGame() {
   field.innerHTML = "";
   gameScore.innerText = ironManCount;
   addItem("IronMan", ironManCount, "IronMan.a44b6e8e.png");
-  addItem("hero", 3, "CaptainAmerica.fbcd2c59.png");
-  addItem("hero", 3, "SpiderMan.04c09517.png");
-  addItem("hero", 3, "Hulk.27b33131.png");
+  addItem("hero", heroCount, "CaptainAmerica.fbcd2c59.png");
+  addItem("hero", heroCount, "SpiderMan.04c09517.png");
+  addItem("hero", heroCount, "Hulk.27b33131.png");
 }
 
 function addItem(className, count, imgPath) {
@@ -284,7 +285,7 @@ function finishGame(win) {
 function hidePopup() {
   popUp.classList.add("pop-up--hide");
 }
-},{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -312,7 +313,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50658" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49441" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -488,5 +489,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
 //# sourceMappingURL=/main.1f19ae8e.js.map
