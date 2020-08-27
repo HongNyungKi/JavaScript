@@ -5,31 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        button {
-            font-size: 50px;
-        }
-
-        button:hover {
-            background: green;
-        }
-    </style>
 </head>
 
 <body>
-    <button>이걸 눌러봐!</button>
     <script>
-        function handleClick() {
-            console.log('handleClick');
-            setTimeout(() => {
-                console.log('settimeout');
-                handleClick();
-            }, 0);
+        function p(ms) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    reject(new Error('fail'))
+                }, ms);
+            })
         }
-        const button = document.querySelector('button');
-        button.addEventListener('click', () => {
-            handleClick();
-        })
+
+        async function main() {
+            try {
+                const ms = await p(1000)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        main()
     </script>
 </body>
 
